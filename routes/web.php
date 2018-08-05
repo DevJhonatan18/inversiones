@@ -39,5 +39,12 @@ Route::get('detalle', 'GastosController@list');
 Route::post('gastos', 'GastosController@save');
 
 
+Route::get('calendar', function () {
+	
+    return view('gastos_detalle_2');
+});
+
+
+Route::POST('calendar2','GastosController@getDetailbyDate');
 
 // Route::get('gastos', 'GastosController@save');

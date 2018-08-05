@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGastosTable extends Migration
+class CreateTgastosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateGastosTable extends Migration
      */
     public function up()
     {
-        Schema::create('gastos', function (Blueprint $table) {
+        Schema::create('tgastos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('cant')->nullable();
-            $table->double('punit')->nullable();
-            $table->double('total')->nullable();
-            $table->timestamp('cdate')->nullable();
-            $table->unsignedInteger('tgasto_id');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateGastosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gastos');
+        Schema::dropIfExists('tgastos');
     }
 }

@@ -8,5 +8,9 @@ class Gasto extends Model
 {
     //
     protected $dates = ['cdate'];
+
+    public function tgasto(){
+    	return $this->belongsTo(Tgasto::class);
+    }
     
 }

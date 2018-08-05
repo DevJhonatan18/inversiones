@@ -29,41 +29,79 @@
 
 
   @section('content')
+       <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Creando </h3>
+        </div>
+        <form method="POST" action="{{URL::to('calendar2')}}">
+          {{csrf_field()}}
+             <div class="box-body">
+                          
 
-  <div class="box-body">
+                  <div class="form-group">
+                    <label>Date:</label>
+
+                    <div class="input-group date">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" class="form-control pull-right" id="datepicker"  name="sdate">
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+
+                   <div class="form-group">
+                     <button type="submit" class="btn btn-primary">Enviar</button>
+                  </div>  
+          
+          @if ( isset($gastod) )
+          <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>ID</th>
                   <th>Nombre</th>
-                  <th>Total</th>
-                  <th>Fecha</th>
-                  <th>Creado</th>
+                  <th>Total [S/.] </th>
                 </tr>
                 </thead>
                   <tbody>
-                  @foreach($gastos as $element)
+                    <?php $total=0  ?>
+                  @foreach($gastod as $element)
                     <tr>
+                      <td>{{$element->id}}</td>
                       <td>{{$element->name}}</td>
                       <td>{{$element->total}}</td>
-                      <td>{{($element->cdate) ? $element->cdate : null }}</td>
-                      <td>{{$element->created_at->format('M d') }}</td>
                     </tr>
+                    <?php $total += $element->total; ?>
                   @endforeach
                 
                   </tbody>
-                
+                    <tfoot>
+                    <tr>
+                      <td>Total</td>
+                      <td></td>
+                      <td><?php echo $total ?></td>
+                    </tr>
+                  </tfoot> 
               
               </table>
-      </div>
-   
-  
-
-  @stop
+       </div>
+       @endif
 
 
+               
+            </div>
+        </form>
+    </div>
+    
+    @if ( isset($chart1) )
+    <div id="chart1" class="chart"></div>
+      
+      {!! $chart1 !!}
+    @endif
 
 
-
+@stop
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
@@ -103,14 +141,11 @@
 
   $(document).ready(function(){
    $('#datepicker').datepicker({
-      autoclose: true
+      autoclose: true,
+      format : 'yyyy-mm-dd'
     })
 
-   var date = $('#datepicker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
-
-    console.log(date)
-
-     $('#example1').DataTable({
+   $('#example1').DataTable({
       'paging'      : true,
       'lengthChange': false,
       'searching'   : false,
@@ -118,6 +153,7 @@
       'info'        : true,
       'autoWidth'   : false
     })
+
 
   })
   
@@ -127,3 +163,10 @@
 
 </script>
  
+
+ <style type="text/css">
+   
+    .chart{
+      height: 500px;
+    }
+ </style>
